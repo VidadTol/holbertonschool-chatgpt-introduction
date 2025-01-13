@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changer la couleur de fond</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 50px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<h2>Cliquez sur le bouton pour changer la couleur de fond</h2>
+
+<button id="colorButton">Changer la couleur</button>
+
+<script>
+    document.getElementById("colorButton").addEventListener("click", function() {
+        changerCouleurDeFond();
+    });
+
+    function changerCouleurDeFond() {
+        // Générer une couleur aléatoire
+        var couleurAleatoire = "#" + Math.floor(Math.random()*16777215).toString(16);
+        // Changer la couleur de fond du corps
+        document.body.style.backgroundColor = couleurAleatoire;
+    }
+</script>
+
+</body>
+</html>
+
