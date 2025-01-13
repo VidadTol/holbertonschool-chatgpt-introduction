@@ -50,5 +50,41 @@ class Minesweeper:
             return False
         
         self.revealed[y][x] = True
-        if self.count_mines_nearby(x
+        if self.count_mines_nearby(x, y) == 0:
+            # Using an explicit stack to avoid recursion depth issues
+            to_check = [(x, y)]
+            while to_check:
+                cx, cy = to_check.pop()
+                for dx in [-1, 0, 1]:
+                    for dy in [-1, 0, 1]:
+                        nx, ny = cx + dx, cy + dy
+                        if 0 <= nx < self.width and 0 <= ny < self.height and not self.revealed[ny][nx]:
+                            self.revealed[ny][nx] = True
+                            if self.count_mines_nearby(nx, ny) == 0:
+                                to_check.append((nx, ny))
+        return True
+
+    def play(self):
+        while True:
+            self.print_board()
+            try:
+                x = int(input(f"Enter x coordinate (0-{self.width - 1}): "))
+                y = int(input(f"Enter y coordinate (0-{self.height - 1}): "))
+                
+                # Validation des coordonnées
+                if not (0 <= x < self.width and 0 <= y < self.height):
+                    print(f"Invalid coordinates. Please enter values within the range 0-{self.width - 1} for x and 0-{self.height - 1} for y.")
+                    continue
+
+                if not self.reveal(x, y):
+                    self.print_board(reveal=True)
+                    print("Game Over! You hit a mine.")
+                    break
+
+            except ValueError:
+                print("Invalid input. Please enter numbers only.")
+
+if __name__ == "__main__":
+    game = Minesweeper()
+    game.play()
 
